@@ -1,5 +1,5 @@
-import EventForm from "@/components/EventForm.client";
+import SignupForm from "@/components/SignupForm.client";
 
 export default function Home() {
-  return <EventForm />;
+  return <SignupForm />;
 }

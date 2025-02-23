@@ -30,8 +30,6 @@ const EventForm = () => {
     descisionMode: 1,
   });
 
-  console.log(eventData);
-
   useEffect(() => {
     setEventData((prev) => ({ ...prev, date: dayjs() }));
   }, []);
