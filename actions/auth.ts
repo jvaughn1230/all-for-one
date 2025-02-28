@@ -42,6 +42,36 @@ export async function signup(state: SignupFormState, formData: FormData) {
 }
 
 // Sign in
+export async function login(state: LoginFormState, formData: FormData) {
+  //validation
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  // If any form fields are invalid, return early
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { email, password } = validatedFields.data;
+
+  try {
+    //Login User
+    const user = await verifyUser(email, password);
+    if (!user) return { success: false, error: "Incorrect Email or Password" };
+
+    //create user session
+    await createSession(user._id.toString());
+
+    redirect("/");
+  } catch (error) {
+    console.error("Login Error: ", error);
+    return { message: "An error occured while logging in" };
+  }
+}
 
 // Logout
 export async function logout() {

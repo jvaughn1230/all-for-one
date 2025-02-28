@@ -10,6 +10,7 @@ if (!process.env.JWT_SECRET) {
 const SECRET_KEY = process.env.JWT_SECRET as string;
 const encodedKey = new TextEncoder().encode(SECRET_KEY);
 
+//Create User Session
 export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const session = await encrypt({ userId, expiresAt });
@@ -22,7 +23,7 @@ export async function createSession(userId: string) {
   });
 }
 
-// Extend Session
+// Extend User Session
 export async function updateSession() {
   const session = (await cookies()).get("session")?.value;
   const payload = await decrypt(session);
@@ -43,6 +44,7 @@ export async function updateSession() {
   });
 }
 
+//End User Session
 export async function deleteSession() {
   const cookieStore = await cookies();
   cookieStore.delete("session");
