@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { User } from "@/models/User";
-import dbConnect from "./mongoose";
+import dbConnect from "./db";
 
 export async function verifyUser(email: string, password: string) {
   await dbConnect();
@@ -44,6 +44,5 @@ export async function loginUser(email: string, password: string) {
   const user = await verifyUser(email, password);
   if (!user) return { success: false, error: "Invalid email or password" };
 
-  // await createSession(user._id.toString());
   return { success: true, user };
 }
